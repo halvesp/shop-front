@@ -25,7 +25,7 @@ export default function CsvManagement() {
     }
   };
 
-  const handleImportCsv = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImport = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -38,9 +38,9 @@ export default function CsvManagement() {
           "Content-Type": "multipart/form-data",
         },
       });
-      setSuccess("Products imported successfully from CSV");
+      setSuccess("Products imported successfully");
     } catch (err) {
-      setError("Failed to import products from CSV");
+      setError("Failed to import products");
     }
   };
 
@@ -56,7 +56,7 @@ export default function CsvManagement() {
         </button>
         <input
           type="file"
-          onChange={handleImportCsv}
+          onChange={handleImport}
           className="w-full py-2 mb-4"
         />
         {error && <p className="text-red-500">{error}</p>}

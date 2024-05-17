@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import ImportProducts from "./import-products";
-import ProductCard from "./components/ProductCard";
+import axios from "axios";
 
 type Product = {
   id: number;
@@ -14,32 +13,42 @@ type Product = {
 export default function Products() {
   const [products, setProducts] = useState<Product[]>([]);
 
-  const fetchProducts = async () => {
-    const res = await fetch("http://localhost:8000/api/products");
-    const data = await res.json();
-    setProducts(data);
-  };
-
   useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get("http://localhost:8000/api/products");
+        setProducts(response.data);
+      } catch (error) {
+        console.error("Failed to fetch products", error);
+      }
+    };
+
     fetchProducts();
   }, []);
 
   return (
     <div className="container mx-auto px-4">
-      <h1 className="text-4xl font-bold text-center my-8">Products</h1>
-      <ImportProducts />
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {products.map((product) => (
-          <ProductCard
-            key={product.id}
-            title={product.title}
-            price={product.price}
-            description={product.description}
-            image={product.image}
-            category={product.category}
-          />
-        ))}
-      </div>
+      <h1 className="text-2xl font-bold my-4">Products</h1>
+      <table className="table-auto w-full">
+        <thead>
+          <tr>
+            <th className="px-4 py-2">Title</th>
+            <th className="px-4 py-2">Description</th>
+            <th className="px-4 py-2">Price</th>
+            <th className="px-4 py-2">Category</th>
+          </tr>
+        </thead>
+        <tbody>
+          {products.map((product) => (
+            <tr key={product.id}>
+              <td className="border px-4 py-2">{product.title}</td>
+              <td className="border px-4 py-2">{product.description}</td>
+              <td className="border px-4 py-2">{product.price}</td>
+              <td className="border px-4 py-2">{product.category}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

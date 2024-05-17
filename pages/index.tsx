@@ -11,10 +11,10 @@ export default function Home() {
               <Link href="/login">Login</Link>
             </li>
             <li>
-              <Link href="/Products">Products</Link>
+              <Link href="/products">Products</Link>
             </li>
             <li>
-              <Link href="/import">Import Products</Link>
+              <Link href="/import-products">Import Products</Link>
             </li>
             <li>
               <Link href="/csv-management">CSV Management</Link>
