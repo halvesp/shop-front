@@ -20,10 +20,10 @@ module.exports = {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
-        background: '#092635',
-        foreground: "hsl(var(--foreground))",
-        primary: '#1B4242',
-        secondary: '#5C8374',
+        background: "#F9F7F7",
+        foreground: "#112D4E",
+        primary: '#3F72AF',
+        secondary: '#112D4E',
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
@@ -32,7 +32,7 @@ module.exports = {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",
         },
-        accent: '#9EC8B9',
+        accent: '#DBE2EF',
         popover: {
           DEFAULT: "hsl(var(--popover))",
           foreground: "hsl(var(--popover-foreground))",

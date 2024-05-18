@@ -25,8 +25,8 @@ const Login = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-background">
-      <div className="bg-background w-full h-screen flex items-center justify-center">
+    <div className="flex items-center justify-center min-h-screen bg-primary">
+      <div className="bg-primary w-full h-screen flex items-center justify-center">
         <div>
           <img src="/logo2.png" width={350} />
           <p className="text-lg text-white">
@@ -34,7 +34,7 @@ const Login = () => {
           </p>
         </div>
       </div>
-      <div className="bg-white p-8 rounded-3xl shadow-md w-full h-screen flex items-center">
+      <div className="bg-white p-8 rounded-l-3xl shadow-md w-full h-screen flex items-center">
         <div className="w-full px-12 grid gap-3">
           <h1 className="text-2xl mb-6 text-center text-primary">
             <img src="/justb.png" width={40} className="m-auto" />
@@ -64,7 +64,7 @@ const Login = () => {
             {error && <p className="text-red-500">{error}</p>}
             <button
               type="submit"
-              className="w-full py-2 bg-primary text-white rounded hover:bg-secondary"
+              className="w-full py-2 bg-primary text-white rounded hover:bg-secondary duration-100"
             >
               Entrar
             </button>

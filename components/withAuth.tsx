@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-
+import Navbar from "./Navbar";
 const withAuth = (WrappedComponent: React.ComponentType) => {
   const AuthComponent = (props: any) => {
     const router = useRouter();
@@ -12,7 +12,14 @@ const withAuth = (WrappedComponent: React.ComponentType) => {
       }
     }, [router]);
 
-    return <WrappedComponent {...props} />;
+    return (
+      <>
+        <Navbar />
+        <div className="pt-24 px-4">
+          <WrappedComponent {...props} />
+        </div>
+      </>
+    );
   };
 
   return AuthComponent;
