@@ -18,7 +18,7 @@ const Toast: React.FC<ToastProps> = ({ message, type, onClose }) => {
 
   return createPortal(
     <div
-      className={`fixed bottom-5 right-5 flex items-center justify-between p-4 rounded shadow-md text-white ${
+      className={`fixed bottom-5 right-5 flex items-center justify-between p-4 rounded shadow-md text-white z-50 ${
         type === "success" ? "bg-green-500" : "bg-red-500"
       }`}
     >

@@ -18,8 +18,6 @@ import Toast from "./Toast";
 export const ExportCsv = () => {
   const [toastMessage, setToastMessage] = useState("");
   const [toastType, setToastType] = useState<"success" | "error" | "">("");
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const handleExport = async () => {
@@ -65,7 +63,7 @@ export const ExportCsv = () => {
             <AlertDialogCancel onClick={() => setIsDialogOpen(false)}>
               Cancel
             </AlertDialogCancel>
-            <AlertDialogAction onClick={handleExport}>
+            <AlertDialogAction onClick={handleExport} className="text-white">
               Confirm
             </AlertDialogAction>
           </AlertDialogFooter>

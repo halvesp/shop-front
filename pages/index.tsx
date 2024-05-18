@@ -26,14 +26,9 @@ function Home() {
             <SheetTrigger asChild>
               <Button variant="outline">Importações</Button>
             </SheetTrigger>
-            <SheetContent>
+            <SheetContent className="flex flex-col gap-10">
               <ImportProducts />
               <ImportCsv />
-              <SheetFooter>
-                <SheetClose asChild>
-                  <Button type="submit">Save changes</Button>
-                </SheetClose>
-              </SheetFooter>
             </SheetContent>
           </Sheet>
         </div>

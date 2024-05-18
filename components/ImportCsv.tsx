@@ -12,10 +12,12 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import Toast from "./Toast";
+import { Input } from "./ui/input";
 
 export const ImportCsv = () => {
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastType, setToastType] = useState<"success" | "error" | "">("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [file, setFile] = useState<File | null>(null);
 
@@ -39,11 +41,13 @@ export const ImportCsv = () => {
           "Content-Type": "multipart/form-data",
         },
       });
-      setSuccess("Products imported successfully");
-      setError("");
+      setToastMessage("Products exported successfully");
+      setToastType("success");
+      console.log("sucesso ao importar");
     } catch (err) {
-      setError("Failed to import products");
-      setSuccess("");
+      setToastMessage("Failed to export products");
+      setToastType("error");
+      console.log("erro ao importar");
     } finally {
       setIsDialogOpen(false);
       setFile(null);
@@ -51,42 +55,39 @@ export const ImportCsv = () => {
   };
 
   return (
-    <div className="flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded shadow-md w-full max-w-lg">
-        <h1 className="text-2xl mb-6 text-center">CSV Management</h1>
-        <input
-          type="file"
-          onChange={handleFileChange}
-          className="w-full py-2 mb-4"
+    <div className="border-b pb-5">
+      <p className="text-xl font-bold mb-2">Importar CSV</p>
+      <p className="text-md mb-3">
+        Ao realizar a operação você trará todos os produtos do arquivo CSV para
+        a loja{" "}
+      </p>
+      <Input type="file" onChange={handleFileChange} />
+      <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Confirm Import</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to import the selected CSV file? This action
+              cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={() => setIsDialogOpen(false)}>
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction onClick={handleImport} className="text-white">
+              Confirm
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+      {toastMessage && (
+        <Toast
+          message={toastMessage}
+          type={toastType}
+          onClose={() => setToastMessage("")}
         />
-        {error && <p className="text-red-500">{error}</p>}
-        {success && <p className="text-green-500">{success}</p>}
-
-        <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-          <AlertDialogTrigger asChild>
-            <Button variant="outline" className="hidden">
-              Show Dialog
-            </Button>
-          </AlertDialogTrigger>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>Confirm Import</AlertDialogTitle>
-              <AlertDialogDescription>
-                Are you sure you want to import the selected CSV file? This
-                action cannot be undone.
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel onClick={() => setIsDialogOpen(false)}>
-                Cancel
-              </AlertDialogCancel>
-              <AlertDialogAction onClick={handleImport}>
-                Confirm
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
-      </div>
+      )}
     </div>
   );
 };
