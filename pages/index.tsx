@@ -28,7 +28,7 @@ function Home() {
                 Importações
               </Button>
             </SheetTrigger>
-            <SheetContent className="flex flex-col gap-10">
+            <SheetContent className="flex flex-col gap-5">
               <ImportProducts />
               <ImportCsv />
             </SheetContent>

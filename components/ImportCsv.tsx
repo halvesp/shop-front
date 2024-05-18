@@ -14,12 +14,15 @@ import {
 import { Button } from "@/components/ui/button";
 import Toast from "./Toast";
 import { Input } from "./ui/input";
+import { LoaderCircle } from "lucide-react";
 
 export const ImportCsv = () => {
   const [toastMessage, setToastMessage] = useState("");
   const [toastType, setToastType] = useState<"success" | "error" | "">("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [file, setFile] = useState<File | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [disableBtn, setDisableBtn] = useState(false);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
@@ -30,6 +33,9 @@ export const ImportCsv = () => {
   };
 
   const handleImport = async () => {
+    setIsLoading(true);
+    setDisableBtn(true);
+
     if (!file) return;
 
     const formData = new FormData();
@@ -51,6 +57,8 @@ export const ImportCsv = () => {
     } finally {
       setIsDialogOpen(false);
       setFile(null);
+      setIsLoading(false);
+      setDisableBtn(false);
     }
   };
 
@@ -61,7 +69,13 @@ export const ImportCsv = () => {
         Ao realizar a operação você trará todos os produtos do arquivo CSV para
         a loja{" "}
       </p>
-      <Input type="file" onChange={handleFileChange} />
+      <Input type="file" onChange={handleFileChange} disabled={disableBtn} />
+      {isLoading && (
+        <div className="flex items-center gap-2 font-semibold text-zinc-400 text-sm pt-1 float-right">
+          Aguarde
+          <LoaderCircle className="animate-spin" width={15} />
+        </div>
+      )}
       <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
