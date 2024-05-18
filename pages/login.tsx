@@ -28,7 +28,7 @@ const Login = () => {
     <div className="flex items-center justify-center min-h-screen bg-primary">
       <div className="bg-primary w-full h-screen flex items-center justify-center">
         <div>
-          <img src="/logo2.png" width={350} />
+          <img src="/logo3.png" width={350} />
           <p className="text-lg text-white">
             Compre inteligente, compre no Bazaar
           </p>

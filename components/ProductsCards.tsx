@@ -81,13 +81,15 @@ export const Products = () => {
 
   return (
     <div className="container mx-auto px-4">
-      <h1 className="text-2xl font-bold w-full border-b mb-5 pb-2">
-        Produtos da loja
-      </h1>
-      <div className="grid grid-cols-4 gap-5">
+      <div className="grid grid-cols-3 gap-5">
         {products.map((product) => (
           <Card key={product.id}>
             <CardHeader>
+              <img
+                src={product.image}
+                alt={product.title}
+                className="w-40 h-40 cover mb-4 m-auto pb-2"
+              />
               <CardTitle>{product.title}</CardTitle>
               <CardDescription>{product.category}</CardDescription>
             </CardHeader>
@@ -100,7 +102,7 @@ export const Products = () => {
                       onClick={() => openModal(product)}
                       className="text-blue-500"
                     >
-                      Read more
+                      Ler mais
                     </button>
                   </>
                 ) : (
@@ -109,7 +111,7 @@ export const Products = () => {
               </p>
             </CardContent>
             <CardFooter>
-              <p>{product.price}</p>
+              <p className="font-bold text-primary text-xl">{product.price}</p>
             </CardFooter>
           </Card>
         ))}
@@ -153,6 +155,11 @@ export const Products = () => {
           </AlertDialogTrigger>
           <AlertDialogContent>
             <AlertDialogHeader>
+              <img
+                src={`${selectedProduct.image}`}
+                width={200}
+                className="mx-auto pb-2"
+              />
               <AlertDialogTitle>{selectedProduct.title}</AlertDialogTitle>
               <AlertDialogDescription>
                 {selectedProduct.description}
