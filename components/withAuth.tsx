@@ -15,7 +15,7 @@ const withAuth = (WrappedComponent: React.ComponentType) => {
     return (
       <>
         <Navbar />
-        <div className="pt-24 px-4">
+        <div className="pt-24 px-4 pb-5">
           <WrappedComponent {...props} />
         </div>
       </>

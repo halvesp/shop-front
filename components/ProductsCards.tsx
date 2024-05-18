@@ -23,7 +23,6 @@ import { Button } from "@/components/ui/button";
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
   PaginationItem,
   PaginationLink,
   PaginationNext,
@@ -43,19 +42,28 @@ export const Products = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const productsPerPage = 16;
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/api/products");
-        setProducts(response.data);
+        const response = await axios.get("http://localhost:8000/api/products", {
+          params: {
+            page: currentPage,
+            limit: productsPerPage,
+          },
+        });
+        setProducts(response.data.products);
+        setTotalPages(response.data.totalPages);
       } catch (error) {
         console.error("Failed to fetch products", error);
       }
     };
 
     fetchProducts();
-  }, []);
+  }, [currentPage]);
 
   const openModal = (product: Product) => {
     setSelectedProduct(product);
@@ -67,9 +75,15 @@ export const Products = () => {
     setIsModalOpen(false);
   };
 
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
   return (
     <div className="container mx-auto px-4">
-      <h1 className="text-2xl font-bold">Products</h1>
+      <h1 className="text-2xl font-bold w-full border-b mb-5 pb-2">
+        Produtos da loja
+      </h1>
       <div className="grid grid-cols-4 gap-5">
         {products.map((product) => (
           <Card key={product.id}>
@@ -100,6 +114,35 @@ export const Products = () => {
           </Card>
         ))}
       </div>
+
+      <Pagination>
+        <PaginationPrevious
+          onClick={() => handlePageChange(Math.max(currentPage - 1, 1))}
+          disabled={currentPage === 1}
+        >
+          Previous
+        </PaginationPrevious>
+        <PaginationContent>
+          {Array.from({ length: totalPages }, (_, index) => (
+            <PaginationItem key={index}>
+              <PaginationLink
+                onClick={() => handlePageChange(index + 1)}
+                isCurrent={index + 1 === currentPage}
+              >
+                {index + 1}
+              </PaginationLink>
+            </PaginationItem>
+          ))}
+        </PaginationContent>
+        <PaginationNext
+          onClick={() =>
+            handlePageChange(Math.min(currentPage + 1, totalPages))
+          }
+          disabled={currentPage === totalPages}
+        >
+          Next
+        </PaginationNext>
+      </Pagination>
 
       {selectedProduct && (
         <AlertDialog open={isModalOpen} onOpenChange={closeModal}>
