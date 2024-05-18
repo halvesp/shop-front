@@ -117,20 +117,18 @@ export const Products = () => {
       <div className="grid grid-cols-3 gap-5 pt-5">
         {isLoading
           ? Array.from({ length: productsPerPage }).map((_, index) => (
-              <Card key={index}>
-                <CardHeader>
-                  <Skeleton className="h-[200px] w-full rounded-xl" />
-                  <CardTitle>
-                    <Skeleton className="h-4 w-[250px]" />
-                  </CardTitle>
-                  <CardDescription>
-                    <Skeleton className="h-4 w-[200px]" />
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <Skeleton className="h-4 w-[150px]" />
-                </CardContent>
-              </Card>
+              <div
+                key={index}
+                className="bg-white p-5 grid gap-5 rounded-lg border shadow-md"
+              >
+                <Skeleton className="h-[200px] w-full rounded-xl" />
+                <div className="grid gap-2">
+                  <Skeleton className="h-4 w-[250px]" />
+                  <Skeleton className="h-4 w-[200px]" />
+                </div>
+                <Skeleton className="h-4 w-full" />
+                <Skeleton className="h-4 w-[50px]" />
+              </div>
             ))
           : products.map((product) => (
               <Card key={product.id}>
