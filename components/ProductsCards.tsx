@@ -114,7 +114,7 @@ export const Products = () => {
           Próxima
         </PaginationNext>
       </Pagination>
-      <div className="grid grid-cols-3 gap-5 pt-5">
+      <div className="grid md:grid-cols-3 gap-5 pt-5">
         {isLoading
           ? Array.from({ length: productsPerPage }).map((_, index) => (
               <div

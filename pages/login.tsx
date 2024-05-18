@@ -25,8 +25,8 @@ const Login = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-primary">
-      <div className="bg-primary w-full h-screen flex items-center justify-center">
+    <div className="md:flex items-center justify-center min-h-screen bg-primary">
+      <div className="bg-primary w-full h-screen md:flex hidden items-center justify-center">
         <div>
           <img src="/logo3.png" width={350} />
           <p className="text-lg text-white">
@@ -34,7 +34,7 @@ const Login = () => {
           </p>
         </div>
       </div>
-      <div className="bg-white p-8 rounded-l-3xl shadow-md w-full h-screen flex items-center">
+      <div className="bg-white md:p-8 md:rounded-l-3xl shadow-md w-full h-screen flex items-center">
         <div className="w-full px-12 grid gap-3">
           <h1 className="text-2xl mb-6 text-center text-primary">
             <img src="/justb.png" width={40} className="m-auto" />
