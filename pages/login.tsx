@@ -1,16 +1,19 @@
-// src/pages/login.tsx
-
 import React, { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { LoaderCircle } from "lucide-react";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const [disableBtn, setDisableBtn] = useState(false);
 
   const handleLogin = async (e: React.FormEvent) => {
+    setIsLoading(true);
+    setDisableBtn(true);
     e.preventDefault();
     try {
       const response = await axios.post("http://localhost:8000/api/login", {
@@ -20,7 +23,12 @@ const Login = () => {
       localStorage.setItem("authToken", response.data.token);
       router.push("/");
     } catch (err) {
-      setError("Login failed. Please check your credentials and try again.");
+      setError(
+        "Falha no login. Por favor, cheque suas credenciais e tente novamente."
+      );
+    } finally {
+      setIsLoading(false);
+      setDisableBtn(false);
     }
   };
 
@@ -61,13 +69,22 @@ const Login = () => {
                 required
               />
             </div>
-            {error && <p className="text-red-500">{error}</p>}
             <button
               type="submit"
               className="w-full py-2 bg-primary text-white rounded hover:bg-secondary duration-100"
+              disabled={disableBtn}
             >
-              Entrar
+              {isLoading ? (
+                <div className="flex items-center gap-2 font-semibold text-white text-sm">
+                  <LoaderCircle className="animate-spin m-auto" width={15} />
+                </div>
+              ) : (
+                "Entrar"
+              )}
             </button>
+            {error && (
+              <p className="text-red-400 font-semibold mt-1">{error}</p>
+            )}
           </form>
         </div>
       </div>
