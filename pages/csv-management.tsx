@@ -1,7 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
+import withAuth from "../components/withAuth";
 
-export default function CsvManagement() {
+function CsvManagement() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
@@ -65,3 +66,5 @@ export default function CsvManagement() {
     </div>
   );
 }
+
+export default withAuth(CsvManagement);

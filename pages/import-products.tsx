@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import withAuth from "../components/withAuth";
 
 type Product = {
   id: number;
@@ -10,7 +11,7 @@ type Product = {
   category: string;
 };
 
-export default function ImportProducts() {
+function ImportProducts() {
   const [products, setProducts] = useState<Product[]>([]);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -73,3 +74,5 @@ export default function ImportProducts() {
     </div>
   );
 }
+
+export default withAuth(ImportProducts);
