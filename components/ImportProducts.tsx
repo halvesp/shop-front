@@ -58,22 +58,24 @@ export const ImportProducts = () => {
       </p>
       <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <AlertDialogTrigger asChild>
-          <Button className="float-right text-white">Importar produtos</Button>
+          <Button className="float-right bg-accent hover:text-zinc-100">
+            Importar produtos
+          </Button>
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Confirm Import</AlertDialogTitle>
+            <AlertDialogTitle>Confirmar Importação</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to import products from the Fake API? This
-              action cannot be undone.
+              Você tem certeza que deseja importar produtos da FakeStore API?
+              Essa ação não poderá ser desfeita.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel onClick={() => setIsDialogOpen(false)}>
-              Cancel
+              Cancelar
             </AlertDialogCancel>
             <AlertDialogAction onClick={handleImport} className="text-white">
-              Confirm
+              Confirmar
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

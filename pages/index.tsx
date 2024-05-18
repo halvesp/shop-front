@@ -24,7 +24,9 @@ function Home() {
           <ExportCsv />
           <Sheet>
             <SheetTrigger asChild>
-              <Button variant="outline">Importações</Button>
+              <Button className="bg-accent hover:text-zinc-100">
+                Importações
+              </Button>
             </SheetTrigger>
             <SheetContent className="flex flex-col gap-10">
               <ImportProducts />

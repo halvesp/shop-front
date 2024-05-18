@@ -26,7 +26,7 @@ export const PaginationLink = ({
 }) => (
   <button
     className={`px-4 py-2 ${
-      isCurrent ? "border rounded shadow-sm" : "bg-background"
+      isCurrent ? "border rounded shadow-sm bg-accent" : "bg-background"
     }`}
     onClick={onClick}
   >
@@ -45,7 +45,7 @@ export const PaginationPrevious = ({
 }) => (
   <button
     className={`px-4 py-2 mx-2 flex items-center gap-1 rounded ${
-      disabled ? "border shadow-sm" : "bg-background"
+      disabled ? "border shadow-sm bg-accent" : "bg-background"
     }`}
     onClick={onClick}
     disabled={disabled}
@@ -66,7 +66,7 @@ export const PaginationNext = ({
 }) => (
   <button
     className={`px-4 py-2 mx-2 flex items-center gap-1 rounded ${
-      disabled ? "border" : "bg-background"
+      disabled ? "border shadow-sm bg-accent" : "bg-background"
     }`}
     onClick={onClick}
     disabled={disabled}

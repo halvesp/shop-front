@@ -48,23 +48,27 @@ export const ExportCsv = () => {
     <div>
       <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <AlertDialogTrigger asChild>
-          <Button onClick={() => setIsDialogOpen(true)} variant={"outline"}>
-            Export Products to CSV
+          <Button
+            onClick={() => setIsDialogOpen(true)}
+            className="bg-accent hover:text-zinc-100"
+          >
+            Exportar para CSV
           </Button>
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Confirm Export</AlertDialogTitle>
+            <AlertDialogTitle>Confirmar exportação</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to export the products to CSV?
+              Você tem certeza que deseja exportar os produtos para um arquivo
+              CSV?
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel onClick={() => setIsDialogOpen(false)}>
-              Cancel
+              Cancelar
             </AlertDialogCancel>
             <AlertDialogAction onClick={handleExport} className="text-white">
-              Confirm
+              Confirmar
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

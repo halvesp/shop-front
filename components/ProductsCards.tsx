@@ -28,6 +28,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { Skeleton } from "./ui/skeleton";
 
 type Product = {
   id: number;
@@ -44,10 +45,12 @@ export const Products = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const productsPerPage = 16;
+  const [isLoading, setIsLoading] = useState(true);
+  const productsPerPage = 15;
 
   useEffect(() => {
     const fetchProducts = async () => {
+      setIsLoading(true);
       try {
         const response = await axios.get("http://localhost:8000/api/products", {
           params: {
@@ -59,6 +62,8 @@ export const Products = () => {
         setTotalPages(response.data.totalPages);
       } catch (error) {
         console.error("Failed to fetch products", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -81,48 +86,12 @@ export const Products = () => {
 
   return (
     <div className="container mx-auto px-4">
-      <div className="grid grid-cols-3 gap-5">
-        {products.map((product) => (
-          <Card key={product.id}>
-            <CardHeader>
-              <img
-                src={product.image}
-                alt={product.title}
-                className="w-40 h-40 cover mb-4 m-auto pb-2"
-              />
-              <CardTitle>{product.title}</CardTitle>
-              <CardDescription>{product.category}</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p>
-                {product.description.length > 100 ? (
-                  <>
-                    {product.description.substring(0, 100)}...
-                    <button
-                      onClick={() => openModal(product)}
-                      className="text-blue-500"
-                    >
-                      Ler mais
-                    </button>
-                  </>
-                ) : (
-                  product.description
-                )}
-              </p>
-            </CardContent>
-            <CardFooter>
-              <p className="font-bold text-primary text-xl">{product.price}</p>
-            </CardFooter>
-          </Card>
-        ))}
-      </div>
-
       <Pagination>
         <PaginationPrevious
           onClick={() => handlePageChange(Math.max(currentPage - 1, 1))}
           disabled={currentPage === 1}
         >
-          Previous
+          Anterior
         </PaginationPrevious>
         <PaginationContent>
           {Array.from({ length: totalPages }, (_, index) => (
@@ -142,17 +111,95 @@ export const Products = () => {
           }
           disabled={currentPage === totalPages}
         >
-          Next
+          Próxima
+        </PaginationNext>
+      </Pagination>
+      <div className="grid grid-cols-3 gap-5 pt-5">
+        {isLoading
+          ? Array.from({ length: productsPerPage }).map((_, index) => (
+              <Card key={index}>
+                <CardHeader>
+                  <Skeleton className="h-[200px] w-full rounded-xl" />
+                  <CardTitle>
+                    <Skeleton className="h-4 w-[250px]" />
+                  </CardTitle>
+                  <CardDescription>
+                    <Skeleton className="h-4 w-[200px]" />
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Skeleton className="h-4 w-[150px]" />
+                </CardContent>
+              </Card>
+            ))
+          : products.map((product) => (
+              <Card key={product.id}>
+                <CardHeader>
+                  <img
+                    src={product.image}
+                    alt={product.title}
+                    className="w-40 h-40 cover mb-4 m-auto pb-2"
+                  />
+                  <CardTitle>{product.title}</CardTitle>
+                  <CardDescription>{product.category}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p>
+                    {product.description.length > 100 ? (
+                      <>
+                        {product.description.substring(0, 100)}...
+                        <button
+                          onClick={() => openModal(product)}
+                          className="text-blue-500"
+                        >
+                          Ler mais
+                        </button>
+                      </>
+                    ) : (
+                      product.description
+                    )}
+                  </p>
+                </CardContent>
+                <CardFooter>
+                  <p className="font-bold text-primary text-xl">
+                    {product.price}
+                  </p>
+                </CardFooter>
+              </Card>
+            ))}
+      </div>
+
+      <Pagination>
+        <PaginationPrevious
+          onClick={() => handlePageChange(Math.max(currentPage - 1, 1))}
+          disabled={currentPage === 1}
+        >
+          Anterior
+        </PaginationPrevious>
+        <PaginationContent>
+          {Array.from({ length: totalPages }, (_, index) => (
+            <PaginationItem key={index}>
+              <PaginationLink
+                onClick={() => handlePageChange(index + 1)}
+                isCurrent={index + 1 === currentPage}
+              >
+                {index + 1}
+              </PaginationLink>
+            </PaginationItem>
+          ))}
+        </PaginationContent>
+        <PaginationNext
+          onClick={() =>
+            handlePageChange(Math.min(currentPage + 1, totalPages))
+          }
+          disabled={currentPage === totalPages}
+        >
+          Próxima
         </PaginationNext>
       </Pagination>
 
       {selectedProduct && (
         <AlertDialog open={isModalOpen} onOpenChange={closeModal}>
-          <AlertDialogTrigger asChild>
-            <Button variant="outline" className="hidden">
-              Show Dialog
-            </Button>
-          </AlertDialogTrigger>
           <AlertDialogContent>
             <AlertDialogHeader>
               <img
