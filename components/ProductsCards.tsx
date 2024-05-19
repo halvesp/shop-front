@@ -48,6 +48,8 @@ export const Products = () => {
   const [isLoading, setIsLoading] = useState(true);
   const productsPerPage = 15;
 
+  const defaultImage = "/box.png";
+
   useEffect(() => {
     const fetchProducts = async () => {
       setIsLoading(true);
@@ -137,6 +139,9 @@ export const Products = () => {
                     src={product.image}
                     alt={product.title}
                     className="w-40 h-40 cover mb-4 m-auto pb-2"
+                    onError={(e) => {
+                      e.currentTarget.src = defaultImage;
+                    }}
                   />
                   <CardTitle>{product.title}</CardTitle>
                   <CardDescription>{product.category}</CardDescription>
@@ -204,6 +209,9 @@ export const Products = () => {
                 src={`${selectedProduct.image}`}
                 width={200}
                 className="mx-auto pb-2"
+                onError={(e) => {
+                  e.currentTarget.src = defaultImage;
+                }}
               />
               <AlertDialogTitle>{selectedProduct.title}</AlertDialogTitle>
               <AlertDialogDescription>
